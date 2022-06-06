@@ -10,7 +10,7 @@ AM_INIT_AUTOMAKE([1.9 foreign])
 
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 AM_GNU_GETTEXT([external])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -40,7 +40,8 @@ AS_IF([test "x$with_ui" != xno],
 ])
 
 PKG_CHECK_MODULES([GP], [gutenprint])
-PKG_CHECK_MODULES([LCMS], [lcms])
+PKG_CHECK_MODULES([LCMS2], [lcms2],[AC_DEFINE([HAVE_LCMS2], [1], [Use LCMS2])],
+    [PKG_CHECK_MODULES([LCMS], [lcms],[AC_DEFINE([HAVE_LCMS], [1], [Use LCMS1])])])
 AC_CHECK_LIB(m,pow, LIBM_LIBS="-lm")
 AC_SUBST([LIBM_LIBS])
 AC_CHECK_LIB([pnm], [pnm_readpaminit],,,[-lm])
